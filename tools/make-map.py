@@ -32,7 +32,7 @@ while len(trees) < 640 and tries < 40000:
     if 450 < x < 580 and 296 < y < 424: continue
     trees.append((x, y, random.uniform(3.4, 6.6), random.choice(cols)))
 trees.sort(key=lambda t: t[1])
-parts.append('<g class="trees">' + "".join(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{c}"/>' for x, y, r, c in trees) + "</g>")
+# no tree layer
 
 # walkway to the lot
 parts.append(f'<path class="walk" d="M{P(*hub)} L470,330"/>')
