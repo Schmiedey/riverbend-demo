@@ -17,7 +17,7 @@ for (const f of readdirSync("src")) {
   const [, title, nav, scripts] = m;
   const page = f.replace(".html", "");
   const fullTitle = page === "index" ? "Riverbend Fall Classic — 12U & 14U baseball, Nov 7–8 (demo)" : title + " — Riverbend Fall Classic (demo)";
-  const preload = page === "index" ? '<link rel="preload" as="image" href="/assets/img/park-dusk-1200.webp" imagesrcset="/assets/img/park-dusk-1200.webp 1200w, /assets/img/park-dusk-2400.webp 2400w" imagesizes="100vw">\n' : "";
+  const preload = page === "index" ? '<link rel="preload" as="image" href="/assets/img/archive-batter.webp" imagesizes="100vw">\n' : "";
   let h = head.replace("{{TITLE}}", fullTitle).replace("{{PAGE}}", page).replace("{{SUB}}", page === "index" ? "" : " page-sub").replace("{{PRELOAD}}", preload);
   for (const n of ["register", "bracket", "fields", "admin"]) {
     h = h.replace("{{NAV_" + n + "}}", n === nav ? ' aria-current="page"' : "");
