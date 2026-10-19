@@ -1,0 +1,20 @@
+<!-- title: Operator dashboard | nav: admin | scripts: admin.js -->
+<main id="main">
+  <div class="wrap">
+    <p class="eyebrow">Tournament director view</p>
+    <h1 style="font-size:clamp(1.8rem,6vw,2.6rem)">Registrations</h1>
+    <p class="muted">Who's in, who's paid, and one-tap export for your spreadsheet. In a real build this page sits behind a login; it's open here so you can try it.</p>
+
+    <div class="stats" id="stats"></div>
+
+    <div class="toolbar">
+      <div class="search"><label for="q" class="sr-only">Search teams or coaches</label><input id="q" type="search" placeholder="Search team, coach or email"></div>
+      <div><label for="f-age" class="sr-only">Age group</label><select id="f-age"><option value="">All ages</option><option>12U</option><option>14U</option></select></div>
+      <div><label for="f-status" class="sr-only">Payment status</label><select id="f-status"><option value="">Paid &amp; unpaid</option><option value="paid">Paid</option><option value="unpaid">Unpaid</option></select></div>
+      <button class="btn dark" id="csv" type="button">Export CSV</button>
+    </div>
+
+    <p class="muted" id="count" aria-live="polite" style="font-size:.9rem"></p>
+    <div class="reg-list" id="list"></div>
+  </div>
+</main>

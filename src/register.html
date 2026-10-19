@@ -1,0 +1,106 @@
+<!-- title: Register | nav: register | scripts: register.js -->
+<main id="main">
+  <div class="wrap narrow">
+    <ol class="steps" aria-label="Registration progress">
+      <li id="st1" class="on" aria-current="step">Team</li>
+      <li id="st2">Payment</li>
+      <li id="st3">Confirmed</li>
+    </ol>
+
+    <div id="canceled" class="notice" hidden style="margin-bottom:16px">Payment was canceled. Your details are saved below, so you can try again.</div>
+
+    <section id="step-form" aria-labelledby="h-form">
+      <p class="eyebrow">Step 1 of 3</p>
+      <h1 id="h-form" style="font-size:clamp(1.7rem,6vw,2.4rem)">Register your team</h1>
+      <p class="muted">Entry fee is $495 per team. Every field is required unless marked optional.</p>
+
+      <div id="summary" class="form-summary" role="alert" tabindex="-1"></div>
+
+      <form id="reg" novalidate>
+        <div class="field">
+          <label for="team">Team name</label>
+          <input id="team" name="team" type="text" autocomplete="organization" maxlength="60" aria-describedby="team-err">
+          <div id="team-err" class="err"></div>
+        </div>
+
+        <fieldset id="age-set" aria-describedby="age-err">
+          <legend>Age bracket</legend>
+          <div class="seg">
+            <label><input type="radio" name="age" value="12U">12U<span>Born 2014 or later</span></label>
+            <label><input type="radio" name="age" value="14U">14U<span>Born 2012 or later</span></label>
+          </div>
+          <div id="age-err" class="err"></div>
+        </fieldset>
+
+        <div class="field">
+          <label for="coach">Head coach name</label>
+          <input id="coach" name="coach" type="text" autocomplete="name" maxlength="60" aria-describedby="coach-err">
+          <div id="coach-err" class="err"></div>
+        </div>
+
+        <div class="field">
+          <label for="email">Coach email</label>
+          <p class="hint" id="email-hint">Your confirmation and schedule updates go here.</p>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="email-hint email-err">
+          <div id="email-err" class="err"></div>
+        </div>
+
+        <div class="field">
+          <label for="phone">Coach mobile</label>
+          <p class="hint" id="phone-hint">For rain delays and field changes on game day.</p>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="(555) 555-0123" aria-describedby="phone-hint phone-err">
+          <div id="phone-err" class="err"></div>
+        </div>
+
+        <div class="field">
+          <label for="players">Number of players</label>
+          <p class="hint" id="players-hint">Rosters are 9 to 15 players.</p>
+          <div class="stepper">
+            <button type="button" data-step="-1" aria-label="One fewer player">−</button>
+            <input id="players" name="players" type="number" inputmode="numeric" min="9" max="15" value="12" aria-describedby="players-hint players-err">
+            <button type="button" data-step="1" aria-label="One more player">+</button>
+          </div>
+          <div id="players-err" class="err"></div>
+        </div>
+
+        <div class="field">
+          <label for="pool">Preferred pool <span class="muted" style="font-weight:500">(optional)</span></label>
+          <p class="hint" id="pool-hint">We'll try to honor it, but final pools are set by the director.</p>
+          <select id="pool" name="pool" aria-describedby="pool-hint">
+            <option value="">No preference</option>
+          </select>
+        </div>
+
+        <div class="sticky-cta">
+          <button class="btn block" type="submit">Continue to payment</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="step-pay" hidden aria-labelledby="h-pay">
+      <p class="eyebrow">Step 2 of 3</p>
+      <h1 id="h-pay" style="font-size:clamp(1.7rem,6vw,2.4rem)" tabindex="-1">Review and pay</h1>
+      <div class="card">
+        <dl class="kv" id="review"></dl>
+        <div class="total"><span>Entry fee</span><span>$495.00</span></div>
+      </div>
+
+      <div id="sim" hidden>
+        <div class="stripe-box" aria-label="Simulated checkout">
+          <div class="row"><b>Checkout</b><span class="test-badge">TEST MODE</span></div>
+          <div class="row"><span>Card</span><span>Visa test card •••• 4242</span></div>
+          <div class="row"><span>Expires</span><span>12 / 34</span></div>
+          <div class="row"><span>Amount</span><b>$495.00</b></div>
+        </div>
+        <p class="notice">Stripe isn't connected on this copy of the demo, so this step is simulated. Nothing is charged and no card details are collected.</p>
+      </div>
+
+      <div id="pay-err" class="form-summary" role="alert"></div>
+      <div class="sticky-cta" style="display:grid;gap:10px">
+        <button class="btn block" id="pay" type="button">Pay $495.00</button>
+        <button class="btn secondary block" id="back" type="button">Edit team details</button>
+      </div>
+      <p class="muted" style="font-size:.85rem;text-align:center">Payments are processed by Stripe in test mode. Use card 4242 4242 4242 4242, any future date, any CVC.</p>
+    </section>
+  </div>
+</main>

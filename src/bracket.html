@@ -1,0 +1,23 @@
+<!-- title: Bracket & standings | nav: bracket | scripts: bracket.js -->
+<main id="main">
+  <div class="wrap">
+    <p class="eyebrow">Sunday, Nov 8 · Updated live</p>
+    <h1 style="font-size:clamp(1.8rem,6vw,2.6rem)">Bracket &amp; standings</h1>
+    <p class="muted">Scores post as soon as the umpire signs the card. No PDFs, no refreshing your inbox.</p>
+    <div class="tabs" role="tablist" aria-label="Age group">
+      <button role="tab" id="tab-12U" aria-controls="panel" aria-selected="true">12U</button>
+      <button role="tab" id="tab-14U" aria-controls="panel" aria-selected="false" tabindex="-1">14U</button>
+    </div>
+    <div id="panel" role="tabpanel" aria-labelledby="tab-12U">
+      <section aria-labelledby="h-br">
+        <h2 id="h-br">Championship bracket</h2>
+        <div class="bracket" id="bracket"></div>
+      </section>
+      <section aria-labelledby="h-pools">
+        <h2 id="h-pools">Pool play</h2>
+        <p class="muted" style="font-size:.9rem">Seeding: wins, then fewest runs allowed (RA), then run differential (RD). All eight teams advance.</p>
+        <div class="pools" id="pools"></div>
+      </section>
+    </div>
+  </div>
+</main>
