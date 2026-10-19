@@ -1,0 +1,6 @@
+render/
+.source-assets/
+.taste-skill/
+screenshots/
+public/
+node_modules/
