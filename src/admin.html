@@ -1,11 +1,10 @@
 <!-- title: Operator dashboard | nav: admin | scripts: admin.js -->
-<main id="main">
+<main id="main" class="page-main">
   <div class="wrap">
-    <p class="eyebrow">Tournament director view</p>
-    <h1 style="font-size:clamp(1.8rem,6vw,2.6rem)">Registrations</h1>
-    <p class="muted">Who's in, who's paid, and one-tap export for your spreadsheet. In a real build this page sits behind a login; it's open here so you can try it.</p>
+    <h1 class="page-title">Registrations</h1>
+    <p class="lede">Who's in, who's paid, and one-tap export for your spreadsheet. In a real build this page sits behind a login; it's open here so you can try it.</p>
 
-    <div class="stats" id="stats"></div>
+    <div data-ui><div class="stats" id="stats"></div>
 
     <div class="toolbar">
       <div class="search"><label for="q" class="sr-only">Search teams or coaches</label><input id="q" type="search" placeholder="Search team, coach or email"></div>
@@ -15,6 +14,6 @@
     </div>
 
     <p class="muted" id="count" aria-live="polite" style="font-size:.9rem"></p>
-    <div class="reg-list" id="list"></div>
+    <div class="reg-list" id="list"></div></div>
   </div>
 </main>

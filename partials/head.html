@@ -3,26 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{{TITLE}} · Riverbend Fall Classic (demo)</title>
-<meta name="description" content="Demo tournament site: online team registration, payment, live brackets, field map and an operator dashboard. Fictional event.">
+<title>{{TITLE}}</title>
+<meta name="description" content="Demo tournament site: 12U and 14U baseball, Nov 7–8 at a fictional riverside park. Online registration, payment, live bracket, field map and an operator dashboard.">
 <meta name="robots" content="noindex">
-<meta name="theme-color" content="#1f5132">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23fff' stroke='%2314213d' stroke-width='2'/%3E%3Cpath d='M9 5c4 6 4 16 0 22M23 5c-4 6-4 16 0 22' fill='none' stroke='%23b04a10' stroke-width='2'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#111111">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Cpath d='M16 7l9 9-9 9-9-9z' fill='%23c8794a'/%3E%3C/svg%3E">
+<link rel="preload" href="/assets/fonts/clash-grotesk-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/style.css">
+{{PRELOAD}}<script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
-<div class="demo-strip"><strong>Demo site</strong> — fictional event. No real registrations or payments.</div>
-<header class="site-head">
+<body class="page-{{PAGE}}{{SUB}}">
+<header class="site-head" id="top">
   <div class="wrap">
-    <a class="brand" href="/">
-      <svg width="34" height="34" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#fff" stroke="#14213d" stroke-width="2"/><path d="M9 5c4 6 4 16 0 22M23 5c-4 6-4 16 0 22" fill="none" stroke="#b04a10" stroke-width="2" stroke-dasharray="2.2 1.6"/></svg>
-      <span>Riverbend Fall Classic<small>12U / 14U Baseball · Nov 7–8</small></span>
-    </a>
+    <a class="brand" href="/">Riverbend <span>Fall Classic</span></a>
     <nav class="nav" aria-label="Main">
-      <a href="/register"{{NAV_register}}>Register</a>
       <a href="/bracket"{{NAV_bracket}}>Bracket</a>
       <a href="/fields"{{NAV_fields}}>Fields</a>
-      <a href="/admin"{{NAV_admin}}>Operator</a>
+      <a href="/admin" class="hide-sm"{{NAV_admin}}>Operator</a>
+      <a href="/register" class="go"{{NAV_register}}>Register</a>
     </nav>
   </div>
 </header>

@@ -1,51 +1,32 @@
 <!-- title: Fields & times | nav: fields | scripts: fields.js -->
-<main id="main">
+<main id="main" class="page-main">
   <div class="wrap">
-    <p class="eyebrow">Riverbend Park Complex · Millbrook</p>
-    <h1 style="font-size:clamp(1.8rem,6vw,2.6rem)">Fields &amp; game times</h1>
+    <h1 class="page-title">Fields and game times</h1>
+    <p class="lede">Riverbend Park Complex, River Road, Millbrook. Four fields around one HQ tent.</p>
 
-    <section class="split" aria-labelledby="h-map" style="margin-top:20px">
+    <section class="split" aria-labelledby="h-map">
       <div>
         <h2 id="h-map" class="sr-only">Field map</h2>
-        <div class="map-wrap">
-          <svg viewBox="0 0 400 330" role="img" aria-labelledby="map-t map-d">
-            <title id="map-t">Complex map</title>
-            <desc id="map-d">Fields 1 and 2 (12U) are on the north side, Fields 3 and 4 (14U) on the south side. HQ tent, concessions and restrooms sit in the center walkway. Parking and the main entrance are at the bottom.</desc>
-            <rect x="0" y="0" width="400" height="330" rx="10" fill="#e8efe4"/>
-            <g id="fields"></g>
-            <rect x="182" y="40" width="36" height="206" rx="6" fill="#f3ead8"/>
-            <g font-family="system-ui, sans-serif" font-weight="700" text-anchor="middle">
-              <circle cx="200" cy="72" r="13" fill="#b04a10"/><text x="200" y="77" font-size="12" fill="#fff">HQ</text>
-              <circle cx="200" cy="142" r="13" fill="#14213d"/><text x="200" y="146" font-size="9" fill="#fff">FOOD</text>
-              <circle cx="200" cy="212" r="13" fill="#14213d"/><text x="200" y="217" font-size="10" fill="#fff">WC</text>
-            </g>
-            <rect x="20" y="276" width="360" height="40" rx="6" fill="#d5d7dc"/>
-            <g font-family="system-ui, sans-serif" font-weight="700" font-size="13" fill="#14213d" text-anchor="middle">
-              <text x="120" y="301">P  Parking (free)</text>
-              <text x="300" y="301">▲ Main entrance</text>
-            </g>
-          </svg>
-          <div class="legend">
-            <span><i style="background:#b04a10"></i>HQ / check-in</span>
-            <span><i style="background:#14213d"></i>Food · Restrooms</span>
-            <span><i style="background:#3f7d55"></i>12U fields</span>
-            <span><i style="background:#1f5132"></i>14U fields</span>
-          </div>
+        <div class="mapbox">
+          <img src="/assets/img/complex-map.webp" width="1200" height="1200" alt="Top-down map: Fields 1 and 2 (12U) to the south, Fields 3 and 4 (14U) to the north, the HQ tent in the middle, the river curving around the south side">
+          <span class="lbl" style="left:39%;top:64%">Field 1 · 12U</span>
+          <span class="lbl" style="left:61%;top:64%">Field 2 · 12U</span>
+          <span class="lbl" style="left:39%;top:42%">Field 3 · 14U</span>
+          <span class="lbl" style="left:61%;top:42%">Field 4 · 14U</span>
+          <span class="lbl" style="left:50%;top:53%">HQ tent</span>
         </div>
+        <p class="legend">Parking and the main gate are east of the complex. Rendered map of the fictional park.</p>
       </div>
-      <div class="card">
-        <h2>Need to know</h2>
-        <ul class="ticks">
-          <li><b>Check-in:</b> HQ tent, 45 minutes before your first game.</li>
-          <li><b>Saturday:</b> first pitch 8:00 AM, last game 6:00 PM. 90-minute time limit.</li>
-          <li><b>Sunday:</b> quarterfinals 8:00 &amp; 10:00, semis 12:30, finals 3:00.</li>
-          <li><b>Dugouts:</b> home team takes third base.</li>
-          <li><b>Weather:</b> delays are posted here and texted to every head coach.</li>
-        </ul>
-      </div>
+      <ul class="facts-list">
+        <li><b>Check-in</b>HQ tent, 45 minutes before your first game.</li>
+        <li><b>Saturday</b>First pitch 8:00, last game 6:00. 90-minute time limit.</li>
+        <li><b>Sunday</b>Quarterfinals 8:00 and 10:00, semifinals 12:30, finals 3:00.</li>
+        <li><b>Dugouts</b>Home team takes third base.</li>
+        <li><b>Weather</b>Delays post here and go by text to every head coach.</li>
+      </ul>
     </section>
 
-    <section aria-labelledby="h-sched">
+    <section aria-labelledby="h-sched" data-ui>
       <h2 id="h-sched">Schedule</h2>
       <div class="filters">
         <div><label for="f-day">Day</label><select id="f-day"><option value="Sat">Saturday, Nov 7</option><option value="Sun">Sunday, Nov 8</option></select></div>

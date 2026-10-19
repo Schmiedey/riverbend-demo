@@ -55,7 +55,7 @@
       "<div><b>Subject</b> You're registered: " + R.esc(reg.team) + " · " + R.esc(e.name) + "</div>" +
     "</div>" +
     '<div class="email-body">' +
-      '<div class="email-banner"><p class="eyebrow" style="color:#ffd2b3;margin:0 0 4px">' + R.esc(e.dates) + "</p><h3>" + R.esc(e.name) + "</h3></div>" +
+      '<div class="email-banner"><p>' + R.esc(e.dates) + "</p><h3>" + R.esc(e.name) + "</h3></div>" +
       '<div class="email-inner">' +
         "<p>Hi " + R.esc(first) + ",</p>" +
         "<p><b>" + R.esc(reg.team) + "</b> is officially in the " + R.esc(reg.age) + " division. Your $495.00 entry fee has been received. Here's your receipt.</p>" +

@@ -15,6 +15,13 @@ field map and schedule, and an operator dashboard with CSV export.
 - Two Vercel serverless functions in `api/` create and verify Stripe Checkout sessions (test mode only).
 - Registrations made on the demo are kept in the visitor's browser (localStorage); the dashboard shows those plus seeded fictional teams.
 
+## Pictures
+
+- `render/riverbend.py` builds the fictional park in Blender and renders the hero, home-plate and map pictures plus the 4-second loop:
+  `blender -b -P render/riverbend.py -- hero render/final-hero.png 64` (views: hero, plate, map, loop). Outputs are converted to WebP/MP4/WebM in `assets/img/`.
+- Archival photographs: Library of Congress and The Getty (CC0, via rawpixel); Dwight Burdette, CC BY 3.0, via Wikimedia Commons. Credited in the footer.
+- Type: Clash Grotesk (Indian Type Foundry, via Fontshare, ITF Free Font License), self-hosted in `assets/fonts/`.
+
 ## Run locally
 
 ```bash

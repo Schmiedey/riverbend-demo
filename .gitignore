@@ -2,3 +2,7 @@ node_modules
 .vercel
 public
 .DS_Store
+.source-assets
+render/frames/
+render/*.png
+.taste-skill/

@@ -117,8 +117,24 @@
     t._h = setTimeout(() => t.remove(), 3200);
   };
 
+  // The one moving picture stays still for people who ask for less motion.
+  if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    document.addEventListener("DOMContentLoaded", () => document.querySelectorAll("video[autoplay]").forEach(v => { v.removeAttribute("autoplay"); v.pause(); }));
+  }
+
+  // Reveal each section's parts once as it enters. Content stays visible without script.
+  const reveal = () => {
+    const els = document.querySelectorAll("[data-reveal]");
+    if (!("IntersectionObserver" in window)) { els.forEach(e => e.classList.add("in")); return; }
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -10% 0px" });
+    els.forEach(e => io.observe(e));
+  };
+
   // Optional builder credit in the footer.
   document.addEventListener("DOMContentLoaded", () => {
+    reveal();
     const slot = document.getElementById("builder");
     if (slot && R.builder.name) {
       slot.innerHTML = "Built by " + (R.builder.url

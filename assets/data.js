@@ -11,7 +11,7 @@ window.RFC = {
     fee: 495,
     deadline: "Oct 30, 2026",
     capacity: 16,
-    email: "registration@riverbend-demo.example"
+    email: "registration@riverbend.example"
   },
 
   // Set this to show a "built by" credit and contact link in the footer.

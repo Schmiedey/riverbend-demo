@@ -3,15 +3,6 @@
   const $ = id => document.getElementById(id);
   const KEY = "rfc_sched_filters";
 
-  // Draw the four diamonds.
-  const spots = [[95, 135, 1, "#3f7d55"], [305, 135, 2, "#3f7d55"], [95, 255, 3, "#1f5132"], [305, 255, 4, "#1f5132"]];
-  $("fields").innerHTML = spots.map(([x, y, n, c]) =>
-    '<path d="M' + x + " " + y + " L" + (x - 68) + " " + (y - 68) + " A96 96 0 0 1 " + (x + 68) + " " + (y - 68) + ' Z" fill="' + c + '"/>' +
-    '<path d="M' + x + " " + y + " l-22 -22 l22 -22 l22 22 Z" + '" fill="#c98a5a"/>' +
-    '<text x="' + x + '" y="' + (y - 62) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#fff">Field ' + n + "</text>" +
-    '<text x="' + x + '" y="' + (y - 46) + '" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#e6efe9">' + (n < 3 ? "12U" : "14U") + "</text>"
-  ).join("");
-
   const all = R.schedule();
   const teamSel = $("f-team");
   Object.keys(R.ages).forEach(age => {

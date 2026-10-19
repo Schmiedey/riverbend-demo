@@ -1,7 +1,8 @@
 <!-- title: Register | nav: register | scripts: register.js -->
-<main id="main">
-  <div class="wrap narrow">
-    <ol class="steps" aria-label="Registration progress">
+<main id="main" class="page-main">
+  <div class="wrap split">
+  <div>
+    <ol class="steps" aria-label="Registration progress" data-ui>
       <li id="st1" class="on" aria-current="step">Team</li>
       <li id="st2">Payment</li>
       <li id="st3">Confirmed</li>
@@ -9,10 +10,9 @@
 
     <div id="canceled" class="notice" hidden style="margin-bottom:16px">Payment was canceled. Your details are saved below, so you can try again.</div>
 
-    <section id="step-form" aria-labelledby="h-form">
-      <p class="eyebrow">Step 1 of 3</p>
-      <h1 id="h-form" style="font-size:clamp(1.7rem,6vw,2.4rem)">Register your team</h1>
-      <p class="muted">Entry fee is $495 per team. Every field is required unless marked optional.</p>
+    <section id="step-form" aria-labelledby="h-form" data-ui>
+      <h1 id="h-form" class="page-title">Register your team</h1>
+      <p class="lede">$495 per team, about two minutes. Every field is required unless it says optional.</p>
 
       <div id="summary" class="form-summary" role="alert" tabindex="-1"></div>
 
@@ -77,9 +77,8 @@
       </form>
     </section>
 
-    <section id="step-pay" hidden aria-labelledby="h-pay">
-      <p class="eyebrow">Step 2 of 3</p>
-      <h1 id="h-pay" style="font-size:clamp(1.7rem,6vw,2.4rem)" tabindex="-1">Review and pay</h1>
+    <section id="step-pay" hidden aria-labelledby="h-pay" data-ui>
+      <h1 id="h-pay" class="page-title" tabindex="-1">Review and pay</h1>
       <div class="card">
         <dl class="kv" id="review"></dl>
         <div class="total"><span>Entry fee</span><span>$495.00</span></div>
@@ -100,7 +99,12 @@
         <button class="btn block" id="pay" type="button">Pay $495.00</button>
         <button class="btn secondary block" id="back" type="button">Edit team details</button>
       </div>
-      <p class="muted" style="font-size:.85rem;text-align:center">Payments are processed by Stripe in test mode. Use card 4242 4242 4242 4242, any future date, any CVC.</p>
+      <p class="notice">Payments are processed by Stripe in test mode. Use card 4242 4242 4242 4242, any future date, any CVC.</p>
     </section>
+  </div>
+  <aside class="reg-aside">
+    <img src="/assets/img/home-plate.webp" width="1000" height="1250" alt="Behind home plate on Field 1 at dusk (render)">
+    <p>Field 1, Riverbend Park. First pitch Saturday at 8:00.</p>
+  </aside>
   </div>
 </main>

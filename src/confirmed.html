@@ -1,15 +1,15 @@
 <!-- title: You're registered | nav: register | scripts: confirmed.js -->
-<main id="main">
+<main id="main" class="page-main">
   <div class="wrap narrow">
-    <ol class="steps" aria-label="Registration progress">
+    <ol class="steps" aria-label="Registration progress" data-ui>
       <li class="done">Team</li>
       <li class="done">Payment</li>
       <li class="on" aria-current="step">Confirmed</li>
     </ol>
 
-    <section id="ok" hidden>
-      <div class="big-check"><svg width="34" height="34" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7" fill="none" stroke="#1f6b3a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h1 style="font-size:clamp(1.7rem,6vw,2.4rem)" id="ok-h" tabindex="-1">You're in.</h1>
+    <section id="ok" hidden data-ui>
+      <div class="big-check"><svg width="34" height="34" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 10.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h1 class="page-title" id="ok-h" tabindex="-1">You're in.</h1>
       <p class="muted" id="ok-sub"></p>
       <div class="card">
         <dl class="kv" id="receipt"></dl>
@@ -21,15 +21,14 @@
       </div>
 
       <section style="margin-top:40px" aria-labelledby="h-email">
-        <p class="eyebrow">What the coach receives</p>
-        <h2 id="h-email">Confirmation email preview</h2>
-        <p class="muted">Sent automatically the moment payment clears. Shown here instead of sending, since this is a demo.</p>
+        <h2 id="h-email" style="margin-bottom:16px">The email the coach gets</h2>
+        <p class="muted">Sent the moment payment clears. Shown here instead of sent, since this is a demo.</p>
         <div class="email" id="email"></div>
       </section>
     </section>
 
     <section id="missing" hidden class="card">
-      <h1 style="font-size:1.6rem">We couldn't find that registration</h1>
+      <h1 class="page-title">We couldn't find that registration</h1>
       <p class="muted">This demo keeps registrations in your browser only. Start a new one to see the full flow.</p>
       <a class="btn" href="/register">Register a team</a>
     </section>
