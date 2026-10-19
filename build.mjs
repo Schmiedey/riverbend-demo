@@ -27,4 +27,9 @@ for (const f of readdirSync("src")) {
   const map = readFileSync("partials/map.svg", "utf8");
   writeFileSync("public/" + f, h + body.slice(m[0].length).replaceAll("{{MAP}}", map) + foot.replace("{{SCRIPTS}}", tags));
 }
-console.log("built public/");
+// Version every asset URL so a new deploy is never served from a stale browser cache.
+const ver = Date.now().toString(36);
+const stamp = t => t.replace(/\/assets\/[A-Za-z0-9_./-]+\.(?:webp|mp4|webm|woff2|jpg|png|css|js)/g, m => m + "?v=" + ver);
+for (const f of readdirSync("public")) if (f.endsWith(".html")) writeFileSync("public/" + f, stamp(readFileSync("public/" + f, "utf8")));
+writeFileSync("public/assets/style.css", stamp(readFileSync("public/assets/style.css", "utf8")));
+console.log("built public/ (assets v=" + ver + ")");
