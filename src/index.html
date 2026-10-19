@@ -2,6 +2,7 @@
 <main id="main">
   <section class="hero" aria-labelledby="h-hero">
     <img src="/assets/img/park-dusk-1200.webp" srcset="/assets/img/park-dusk-1200.webp 1200w, /assets/img/park-dusk-2400.webp 2400w" sizes="100vw" width="2400" height="1500" alt="Four lit baseball diamonds inside a bend of a river at dusk, ringed by autumn trees (a render of the fictional park)" fetchpriority="high">
+    <video id="hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"><source src="/assets/img/park-drift.webm" type="video/webm"><source src="/assets/img/park-drift.mp4" type="video/mp4"></video>
     <div class="hero-text">
       <h1 id="h-hero" class="lines">
         <span class="line"><span data-line style="--i:0">Riverbend</span></span>
@@ -16,8 +17,8 @@
 
   <section class="intro wrap" aria-label="About the weekend">
     <div class="grid12" data-reveal>
-      <p class="statement">Sixteen teams, four lit fields inside a bend of the river, one November weekend. Everybody plays Sunday.</p>
-      <p class="statement-more">Three pool games each on Saturday seed all eight teams per age group into Sunday's bracket, and the bracket updates from the field the minute a game ends. Coaches register, pay and find their next game from a phone.</p>
+      <p class="statement">Sixteen teams, four lit fields, one bend of the river.</p>
+      <p class="statement-more">Everybody plays Sunday: three pool games on Saturday seed all eight teams in each age group into the bracket. Scores post from the field the minute a game ends, and coaches register, pay and find their next game from a phone.</p>
       <figure><img src="/assets/img/archive-batter.webp" width="850" height="690" loading="lazy" alt="Two boys in old wool uniforms, one batting and one catching, against a brick wall"></figure>
       <p class="note">Boys playing baseball, 1923. Library of Congress. The game hasn't changed much; the paperwork can.</p>
     </div>
@@ -27,7 +28,7 @@
     <div class="grid12">
       <h2 id="h-steps" data-reveal><span>How the weekend runs</span></h2>
       <div class="stage s1">
-        <figure><img src="/assets/img/home-plate.webp" width="1000" height="1250" loading="lazy" alt="View from behind home plate down a chalked baseline toward autumn trees at dusk (render)"></figure>
+        <figure><img src="/assets/img/catcher.webp" width="520" height="683" loading="lazy" alt="A youth catcher in a green jersey and orange-grilled mask crouching behind home plate in warm evening light"></figure>
         <p data-reveal><span><b>By October 30</b>Register online: team details, the $495 entry by card, and a receipt in the coach's inbox before they've closed the tab. Sixteen spots, fourteen already paid.</span></p>
       </div>
       <div class="stage s2">
@@ -35,36 +36,15 @@
         <p data-reveal><span><b>Saturday, November 7</b>Three pool games for every team, 90 minutes each, first pitch at 8:00. Standings update after every final, tiebreakers worked out for you.</span></p>
       </div>
       <div class="stage s3">
-        <figure><img src="/assets/img/pitcher-warmup.webp" width="1400" height="933" loading="lazy" alt="A youth pitcher in a red jersey throwing to a catcher on a grass field"></figure>
+        <figure><img src="/assets/img/hit-ball.webp" width="1400" height="933" loading="lazy" alt="A youth batter swinging as the catcher and umpire crouch behind the plate, a coach watching from the foreground"></figure>
         <p data-reveal><span><b>Sunday, November 8</b>All eight teams in each age group play on, seeded into a single-elimination bracket. Semifinals at 12:30, championships at 3:00 under the lights.</span></p>
       </div>
     </div>
   </section>
 
-  <section class="band" aria-labelledby="h-band">
-    <h2 id="h-band">Four fields on the bend</h2>
-    <div class="band-row">
-      <figure><video autoplay muted loop playsinline preload="none" poster="/assets/img/park-loop-poster.webp" aria-label="Slow aerial drift over the four lit fields at dusk (render)"><source src="/assets/img/park-loop.webm" type="video/webm"><source src="/assets/img/park-loop.mp4" type="video/mp4"></video><p class="title">Riverbend Park<br>at dusk</p></figure>
-      <figure><img src="/assets/img/complex-map.webp" width="1200" height="1200" loading="lazy" alt="Top-down view of four diamonds around a central plaza (render)"></figure>
-      <figure><img src="/assets/img/home-plate.webp" width="1000" height="1250" loading="lazy" alt="Behind home plate on Field 1 (render)"></figure>
-      <figure><img src="/assets/img/archive-stereo.webp" width="380" height="452" loading="lazy" alt="Boys playing baseball on a lawn before a large building, 19th-century stereograph"></figure>
-    </div>
-    <p class="caption">The complex is invented and rendered in Blender for this demo. The last picture is a 19th-century stereograph from The Getty.</p>
-  </section>
-
   <section class="finder wrap" aria-labelledby="h-find">
     <div class="grid12">
-      <figure class="map">
-        <div class="mapbox" id="mapbox">
-          <img src="/assets/img/complex-map.webp" width="1200" height="1200" loading="lazy" alt="Map of the four fields around the HQ tent">
-          <span class="hl" id="hl"></span>
-          <span class="lbl" data-f="1" style="left:39%;top:64%">Field 1</span>
-          <span class="lbl" data-f="2" style="left:61%;top:64%">Field 2</span>
-          <span class="lbl" data-f="3" style="left:39%;top:42%">Field 3</span>
-          <span class="lbl" data-f="4" style="left:61%;top:42%">Field 4</span>
-          <span class="lbl" data-f="0" style="left:50%;top:53%">HQ</span>
-        </div>
-      </figure>
+      <figure class="map" id="mapbox">{{MAP}}</figure>
       <div class="side" data-reveal>
         <h2 id="h-find">Find your team</h2>
         <div class="pick">
@@ -87,7 +67,7 @@
     <div class="grid12">
       <div class="head" data-reveal>
         <h2 id="h-menu">What it costs</h2>
-        <img src="/assets/img/park-dusk-1200.webp" width="1200" height="750" loading="lazy" alt="" style="object-position:62% 50%">
+        <img src="/assets/img/baseballs.webp" width="560" height="678" loading="lazy" alt="A heap of well-used baseballs in a bucket">
       </div>
       <div class="cols" data-reveal>
         <div class="group">
@@ -100,6 +80,11 @@
           <div class="item"><div class="row"><span>Spectators, per day</span><span>$5</span></div><p>Kids 12 and under free.</p></div>
           <div class="item"><div class="row"><span>Players and coaches</span><span>Free</span></div><p>Wristbands at check-in.</p></div>
           <div class="item"><div class="row"><span>Parking</span><span>Free</span></div><p>The lot east of the complex, 120 spaces.</p></div>
+        </div>
+        <div class="group">
+          <h3>Staying over</h3>
+          <div class="item"><div class="row"><span>Team hotel block</span><span>$89</span></div><p>Riverbend Inn, per room per night, breakfast and pool included. Book by October 20.</p></div>
+          <div class="item"><div class="row"><span>Shuttle to the park</span><span>Free</span></div><p>Every 20 minutes from 6:30 AM.</p></div>
         </div>
         <div class="group">
           <h3>Awards</h3>
@@ -130,8 +115,8 @@
         </div>
       </div>
       <div class="right">
-        <img class="tall" src="/assets/img/pitcher-warmup.webp" width="1400" height="933" loading="lazy" alt="A youth pitcher mid-throw on a grass field" style="object-position:22% 50%">
-        <img class="sq" src="/assets/img/archive-batter.webp" width="850" height="690" loading="lazy" alt="" style="object-position:30% 50%">
+        <img class="tall" src="/assets/img/pitcher-tall.webp" width="900" height="1181" loading="lazy" alt="A youth pitcher in a red jersey following through on a grass mound">
+        <img class="sq" src="/assets/img/archive-stereo.webp" width="380" height="452" loading="lazy" alt="Boys playing baseball on a lawn before a large building, a 19th-century stereograph">
       </div>
     </div>
   </section>

@@ -1,17 +1,31 @@
 (function () {
+  // Hero: a slow camera drift fades in over the still. It starts on the first touch, scroll or key
+  // (or 8s after load), so it never competes with the still for the page's load-time measurement.
+  const hv = document.getElementById("hero-video");
+  const calm = matchMedia("(prefers-reduced-motion: reduce)").matches || (navigator.connection && navigator.connection.saveData);
+  let started = false;
+  function startHero() {
+    if (started || !hv || calm) return;
+    started = true;
+    hv.preload = "auto";
+    hv.load();
+    hv.play().then(() => hv.classList.add("on")).catch(() => {});
+  }
+  ["pointerdown", "pointermove", "keydown", "scroll", "touchstart", "wheel"].forEach(t => addEventListener(t, startHero, { once: true, passive: true }));
+  addEventListener("load", () => setTimeout(startHero, 8000));
+
   const R = window.RFC;
   const $ = id => document.getElementById(id);
-  const list = $("fieldlist"), hl = $("hl"), sel = $("team-pick"), answer = $("answer");
+  const list = $("fieldlist"), sel = $("team-pick"), answer = $("answer");
   if (!list) return;
 
   function activate(li) {
     list.querySelectorAll("li").forEach(x => x.classList.toggle("on", x === li));
-    document.querySelectorAll("#mapbox .lbl").forEach(l => l.classList.toggle("on", !!li && l.dataset.f === li.dataset.f));
-    if (!li) { hl.classList.remove("on"); return; }
-    hl.style.left = li.dataset.x + "%";
-    hl.style.top = li.dataset.y + "%";
-    hl.classList.add("on");
+    document.querySelectorAll(".sitemap .fld").forEach(g => g.classList.toggle("on", !!li && g.dataset.f === li.dataset.f));
   }
+  document.querySelectorAll(".sitemap .fld").forEach(g => g.addEventListener("click", () => {
+    activate(list.querySelector('li[data-f="' + g.dataset.f + '"]'));
+  }));
   list.querySelectorAll("li").forEach(li => {
     const b = li.querySelector("button");
     b.addEventListener("click", () => activate(li));

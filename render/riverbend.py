@@ -129,26 +129,84 @@ def rot(v, a):
 # ---------- materials ----------
 G_DARK = (0.030, 0.060, 0.020)
 M = {
-    "ground": noisy("ground", (0.035, 0.060, 0.020), (0.065, 0.072, 0.026), 0.02),
-    "clay": noisy("clay", (0.42, 0.17, 0.07), (0.50, 0.23, 0.10), 0.6),
+    "ground": noisy("ground", (0.045, 0.125, 0.02), (0.11, 0.21, 0.035), 0.035),
+    "clay": noisy("clay", (0.26, 0.10, 0.04), (0.34, 0.15, 0.06), 0.6),
     "chalk": mat("chalk", (0.9, 0.9, 0.88), 0.6),
     "fence": mat("fence", (0.02, 0.05, 0.035), 0.7),
     "backstop": mat("backstop", (0.05, 0.05, 0.05), 0.5, metallic=0.6),
     "pole": mat("pole", (0.25, 0.25, 0.26), 0.5, metallic=0.8),
     "lamp": mat("lamp", (1, 1, 1), 0.3, emit=(1.0, 0.93, 0.80), strength=60),
-    "water": mat("water", (0.010, 0.020, 0.028), 0.04),
+    "water": mat("water", (0.02, 0.035, 0.05), 0.02),
     "concrete": noisy("concrete", (0.30, 0.29, 0.27), (0.36, 0.35, 0.33), 0.3),
     "asphalt": noisy("asphalt", (0.035, 0.035, 0.038), (0.05, 0.05, 0.05), 0.5),
     "tent": mat("tent", (0.80, 0.78, 0.74), 0.7),
-    "bank": noisy("bank", (0.10, 0.07, 0.03), (0.06, 0.05, 0.02), 0.2),
+    "bank": noisy("bank", (0.16, 0.11, 0.05), (0.09, 0.07, 0.03), 0.2),
 }
-LEAVES = [mat("leaf%d" % i, c, 0.9) for i, c in enumerate([
-    (0.42, 0.10, 0.02), (0.62, 0.22, 0.03), (0.70, 0.42, 0.04),
-    (0.30, 0.06, 0.03), (0.16, 0.20, 0.05), (0.55, 0.30, 0.05)])]
+def leaf_mat(name, lo, hi):
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    b.inputs["Roughness"].default_value = 0.85
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+    nt.links.new(tc.outputs["Generated"], sep.inputs["Vector"])
+    nz = nt.nodes.new("ShaderNodeTexNoise")
+    nz.inputs["Scale"].default_value = 6.0
+    nt.links.new(tc.outputs["Object"], nz.inputs["Vector"])
+    add = nt.nodes.new("ShaderNodeMath"); add.operation = "ADD"
+    nt.links.new(sep.outputs["Z"], add.inputs[0])
+    mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"; mul.inputs[1].default_value = 0.35
+    nt.links.new(nz.outputs["Fac"], mul.inputs[0])
+    nt.links.new(mul.outputs["Value"], add.inputs[1])
+    ramp = nt.nodes.new("ShaderNodeValToRGB")
+    ramp.color_ramp.elements[0].position = 0.25
+    ramp.color_ramp.elements[0].color = (lo[0] * 0.25, lo[1] * 0.25, lo[2] * 0.25, 1)
+    ramp.color_ramp.elements[1].position = 0.85
+    ramp.color_ramp.elements[1].color = (*hi, 1)
+    nt.links.new(add.outputs["Value"], ramp.inputs["Fac"])
+    nt.links.new(ramp.outputs["Color"], b.inputs["Base Color"])
+    return m
+
+LEAVES = [leaf_mat("leaf%d" % i, c, c2) for i, (c, c2) in enumerate([
+    ((0.50, 0.10, 0.02), (0.78, 0.20, 0.03)),
+    ((0.60, 0.22, 0.03), (0.95, 0.48, 0.06)),
+    ((0.70, 0.45, 0.04), (1.00, 0.76, 0.12)),
+    ((0.35, 0.07, 0.03), (0.62, 0.14, 0.04)),
+    ((0.16, 0.22, 0.05), (0.36, 0.44, 0.09)),
+    ((0.60, 0.32, 0.05), (0.92, 0.58, 0.10))])]
+
+HAZE = (0.60, 0.34, 0.34)
+def add_fog(m, near=380.0, far=2600.0):
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    src = None
+    for l in nt.links:
+        if l.to_node == b and l.to_socket.name == "Base Color":
+            src = l.from_socket
+    cam = nt.nodes.new("ShaderNodeCameraData")
+    mr = nt.nodes.new("ShaderNodeMapRange")
+    mr.inputs["From Min"].default_value = near
+    mr.inputs["From Max"].default_value = far
+    mr.clamp = True
+    nt.links.new(cam.outputs["View Distance"], mr.inputs["Value"])
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type = "RGBA"
+    nt.links.new(mr.outputs["Result"], mix.inputs["Factor"])
+    if src is not None:
+        nt.links.new(src, mix.inputs["A"])
+    else:
+        mix.inputs["A"].default_value = b.inputs["Base Color"].default_value
+    mix.inputs["B"].default_value = (*HAZE, 1)
+    nt.links.new(mix.outputs["Result"], b.inputs["Base Color"])
+
 TRUNK = mat("trunk", (0.05, 0.035, 0.025), 0.9)
 
+for _m in [M["ground"], M["bank"], M["water"]] + LEAVES:
+    add_fog(_m)
+
 # ---------- ground, river, banks ----------
-poly("ground", [(-6000, -6000), (6000, -6000), (6000, 6000), (-6000, 6000)], 0, M["ground"])
+poly("ground", [(-60000, -60000), (60000, -60000), (60000, 60000), (-60000, 60000)], 0, M["ground"])
 RC, R_IN, R_OUT = (0, 70), 175, 215
 A0, A1 = math.radians(150), math.radians(390)
 sector("bank_in", RC, R_IN, A0, A1, 0.01, M["bank"], 120, R_IN - 5)
@@ -169,8 +227,8 @@ for i, deg in enumerate((225, 315, 135, 45)):  # field numbers 1-4
     d = Vector((math.cos(th), math.sin(th), 0))
     H = HUB + d * 16
     FIELDS.append((H, th, d))
-    s1 = (0.045, 0.11, 0.03)
-    s2 = (0.07, 0.15, 0.04)
+    s1 = (0.08, 0.20, 0.04)
+    s2 = (0.12, 0.29, 0.06)
     sector("outfield%d" % i, (H.x, H.y), 66, th - math.pi / 4, th + math.pi / 4, 0.02, striped("mow%d" % i, s1, s2, 0.11, th), 48)
     sector("skin%d" % i, (H.x, H.y), 27, th - math.pi / 4, th + math.pi / 4, 0.04, M["clay"], 32)
     b1 = H + rot(d, -math.pi / 4) * 18.3
@@ -200,7 +258,7 @@ for i, deg in enumerate((225, 315, 135, 45)):  # field numbers 1-4
         box("lamp", (p.x, p.y, 24.3), (3.2, 0.5, 1.4), M["lamp"], a + math.pi / 2)
         tgt = H + d * 32
         ld = bpy.data.lights.new("spot", "SPOT")
-        ld.energy = 110000 if r == 26 else 300000
+        ld.energy = 200000 if r == 26 else 520000
         ld.spot_size = math.radians(75)
         ld.spot_blend = 0.8
         ld.color = (1.0, 0.92, 0.80)
@@ -227,17 +285,23 @@ for k in range(13):
 
 # ---------- trees ----------
 tree_meshes = []
+from mathutils import noise as mnoise
 for k in range(6):
-    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=3, radius=1, location=(0, 0, -50))
+    bpy.ops.mesh.primitive_ico_sphere_add(subdivisions=4, radius=1, location=(0, 0, -50))
     t = bpy.context.active_object
+    off = Vector((random.uniform(0, 50), random.uniform(0, 50), random.uniform(0, 50)))
     for v in t.data.vertices:
-        v.co *= random.uniform(0.86, 1.12)
+        d = v.co.normalized()
+        r = 1 + 0.30 * mnoise.noise(d * 2.2 + off) + 0.13 * mnoise.noise(d * 6.0 + off) + 0.05 * mnoise.noise(d * 15.0 + off)
+        v.co = d * r
     bpy.ops.object.shade_smooth()
     t.data.materials.append(LEAVES[k])
     tree_meshes.append(t.data)
     bpy.data.objects.remove(t)
 
 def tree(x, y, s):
+    if VIEW in ("hero", "loop") and math.hypot(x + 150, y - 235) < 95:
+        return
     me = random.choice(tree_meshes)
     ob = bpy.data.objects.new("tree", me)
     h = s * random.uniform(1.1, 1.5)
@@ -262,36 +326,40 @@ for _ in range(90):  # a few between fields and parking
     tree(x, y, random.uniform(3, 6))
 
 # ---------- world and sun ----------
+SKY_ROT = float(argv[3]) if len(argv) > 3 else 120.0
 world = bpy.data.worlds.new("dusk")
 scene.world = world
 world.use_nodes = True
 wn = world.node_tree
-bg = wn.nodes["Background"]
-sky_ok = False
-try:
-    sky = wn.nodes.new("ShaderNodeTexSky")
-    for t in ("MULTIPLE_SCATTERING", "NISHITA", "SINGLE_SCATTERING", "HOSEK_WILKIE"):
+for n in list(wn.nodes):
+    if n.type != "OUTPUT_WORLD":
+        wn.nodes.remove(n)
+out = [n for n in wn.nodes if n.type == "OUTPUT_WORLD"][0]
+bg = wn.nodes.new("ShaderNodeBackground")
+sk = wn.nodes.new("ShaderNodeTexSky")
+for t in ("MULTIPLE_SCATTERING", "NISHITA", "SINGLE_SCATTERING"):
+    try:
+        sk.sky_type = t
+        break
+    except Exception:
+        pass
+for attr, val in (("sun_disc", False), ("sun_elevation", math.radians(3.0)), ("sun_rotation", math.radians(SKY_ROT)), ("air_density", 1.6), ("dust_density", 2.2), ("altitude", 0)):
+    if hasattr(sk, attr):
         try:
-            sky.sky_type = t
-            break
+            setattr(sk, attr, val)
         except Exception:
             pass
-    for attr, val in (("sun_elevation", math.radians(1.2)), ("sun_rotation", math.radians(200)), ("altitude", 30), ("air_density", 1.4), ("dust_density", 3.0)):
-        if hasattr(sky, attr):
-            setattr(sky, attr, val)
-    wn.links.new(sky.outputs["Color"], bg.inputs["Color"])
-    bg.inputs["Strength"].default_value = 0.42
-    sky_ok = True
-except Exception as e:
-    print("sky failed", e)
-if not sky_ok:
-    bg.inputs["Color"].default_value = (0.25, 0.12, 0.08, 1)
+wn.links.new(sk.outputs["Color"], bg.inputs["Color"])
+bg.inputs["Strength"].default_value = 0.55
+wn.links.new(bg.outputs["Background"], out.inputs["Surface"])
 
+SUN_DIR = Vector((math.cos(math.radians(7)) * 0.70, -math.cos(math.radians(7)) * 0.72, math.sin(math.radians(7)))).normalized()
 sun_d = bpy.data.lights.new("sun", "SUN")
-sun_d.energy = 1.2
-sun_d.color = (1.0, 0.55, 0.28)
+sun_d.energy = 5.0
+sun_d.angle = math.radians(1.5)
+sun_d.color = (1.0, 0.70, 0.42)
 sun = bpy.data.objects.new("sun", sun_d)
-sun.rotation_euler = (math.radians(88), 0, math.radians(200 + 90))
+sun.rotation_euler = SUN_DIR.to_track_quat("Z", "Y").to_euler()
 scene.collection.objects.link(sun)
 
 # ---------- render settings ----------
@@ -313,7 +381,7 @@ try:
     scene.view_settings.look = "AgX - Medium High Contrast"
 except Exception:
     pass
-scene.view_settings.exposure = 0.0
+scene.view_settings.exposure = -0.9
 
 # ---------- cameras ----------
 cam_d = bpy.data.cameras.new("cam")
@@ -325,7 +393,7 @@ def aim(loc, target, lens):
     cam.location = loc
     cam.rotation_euler = (Vector(target) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
     cam_d.lens = lens
-    cam_d.clip_end = 5000
+    cam_d.clip_end = 400000
 
 H1, th1, d1 = FIELDS[0]
 if VIEW == "hero":
@@ -339,16 +407,19 @@ elif VIEW == "plate":
     p = H1 - d1 * 4.2
     aim((p.x, p.y, 1.3), ((H1 + d1 * 40).x, (H1 + d1 * 40).y, 3.2), 24)
 elif VIEW == "loop":
-    scene.render.resolution_x, scene.render.resolution_y = 1280, 1280
-    scene.frame_start, scene.frame_end = 1, 96
+    scene.render.resolution_x, scene.render.resolution_y = 1600, 1000
+    scene.frame_start, scene.frame_end = 1, 72
     scene.render.fps = 24
-    base = Vector((-120, 250, 130)) - HUB
-    tgt = Vector((0, -40, 0))
-    cam_d.lens = 34
+    base = Vector((-150, 235, 95))
+    tgt = Vector((90, 94, 0))
+    cam_d.lens = 22
+    cam_d.clip_end = 400000
+    cam_d.dof.use_dof = True
+    cam_d.dof.focus_distance = (base - Vector((0, 40, 0))).length
+    cam_d.dof.aperture_fstop = 0.015
     def place(sc, *_):
-        t = (sc.frame_current - 1) / 96.0
-        a = 0.09 * math.sin(2 * math.pi * t)
-        p = HUB + Vector((base.x * math.cos(a) - base.y * math.sin(a), base.x * math.sin(a) + base.y * math.cos(a), base.z + 6 * math.cos(2 * math.pi * t)))
+        t = (sc.frame_current - 1) / 72.0
+        p = base + Vector((9 * math.sin(2 * math.pi * t), 6 * math.cos(2 * math.pi * t) - 6, 3 * math.sin(2 * math.pi * t + 1.0)))
         cam.location = p
         cam.rotation_euler = (tgt - p).to_track_quat("-Z", "Y").to_euler()
     bpy.app.handlers.frame_change_pre.append(place)

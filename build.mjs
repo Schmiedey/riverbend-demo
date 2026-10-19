@@ -24,6 +24,7 @@ for (const f of readdirSync("src")) {
   }
   const tags = scripts.split(",").map(s => s.trim()).filter(Boolean)
     .map(s => '<script src="/assets/' + s + '"></script>').join("\n");
-  writeFileSync("public/" + f, h + body.slice(m[0].length) + foot.replace("{{SCRIPTS}}", tags));
+  const map = readFileSync("partials/map.svg", "utf8");
+  writeFileSync("public/" + f, h + body.slice(m[0].length).replaceAll("{{MAP}}", map) + foot.replace("{{SCRIPTS}}", tags));
 }
 console.log("built public/");
