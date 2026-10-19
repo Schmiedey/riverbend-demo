@@ -1,5 +1,7 @@
 # Riverbend Fall Classic — demo tournament site
 
+**Live demo:** https://riverbend-demo-eight.vercel.app
+
 A fictional youth baseball tournament site used as a portfolio piece for the offer
 "I build your tournament registration and bracket page." Nothing here is a real event.
 
