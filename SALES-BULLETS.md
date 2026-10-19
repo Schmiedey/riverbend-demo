@@ -9,4 +9,4 @@ Plain-language bullets for a coach or tournament director. Paste into the email 
 - **Coaches can filter the schedule to just their team** and see the field map, so fewer "which field are we on?" calls.
 - **You get a dashboard of every team:** who's paid, who hasn't, a one-click payment reminder, and an export to Excel or Google Sheets.
 - **Payments go through Stripe** straight to your account. No middleman holding your money.
-- **It's fast and cheap to run:** loads in about a second on a phone, with no monthly software fee.
+- **It's fast and cheap to run:** loads in about a second on a phone, with no monthly software fee beyond Stripe's standard card processing.
